@@ -1,0 +1,370 @@
+html, body {
+    overflow: hidden; /* Disables scrolling */
+    height: 100%; /* Ensures full height is set */
+}
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    color:rgb(255, 253, 222);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+}
+/* Header styling for the title */
+header {
+    position: absolute; /* Makes the header stay at a fixed position */
+    top: 10px; /* Distance from the top of the page */
+    left: 10px; /* Distance from the left side */
+    z-index: 10; /* Keeps it on top of everything else */
+    border-radius: 70px; /* Rounded corners */
+    padding-left: 45px;
+}
+header {
+    display: flex;
+    align-items: center;  /* Vertically aligns text */
+    justify-content: center; /* Centers the header */
+    flex-direction: column; /* Keeps the header and text on top of each other */
+    text-align: center;
+}
+
+header h2 {
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    color: #99dbffc8;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    padding-bottom: 10px;
+    padding-left: 400px;
+    margin: 32px;
+    align-items:first baseline
+}
+
+/* Style for the additional text next to the header */
+.elvis-info {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;  /* Thin weight */
+    font-size: 16px; /* Adjust size as needed */
+    color: #dcdcdc; /* Light color for the text */
+    margin-top: 10px; /* Space between the header and the text */
+    text-align: right; /* Optional: center text */
+}
+
+/* Title text styling */
+header h1 {
+    position: relative;
+    margin: 20px;
+    padding: 10px;
+    font-size: 20px; /* Increased font size for visibility */
+    font-family: 'montserrat', sans-serif;
+    color: #f9ffcd; /* Golden text color */
+    padding-bottom: 10px;
+    border-radius: 20px; /* Rounded corners */
+    
+    /* Adding glowing background */
+    background: linear-gradient(45deg, #353535,);
+    background-size: 400% 400%;
+    animation: glowing 10s ease-in-out infinite;
+
+    /* Adding animation to text */
+    text-align: center;
+    animation: glowText 0.1s ease-in-out infinite alternate;
+}
+
+/* Glowing effect animation for the background */
+@keyframes glowing {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Glowing text effect */
+@keyframes glowText {
+    10% { text-shadow: 0 0 5px #5e8cff, 0 0 10px #869cff, 0 0 15px #88aaff, 0 0 20px #00c8ff, 0 0 30px #0051ff, 0 0 40px #006aff, 0 0 50px #001eff; }
+    100% { text-shadow: 0 0 10px #33ccff, 0 0 20px #33ccff, 0 0 30px #33ccff, 0 0 40px #33ccff, 0 0 50px #33ccff, 0 0 60px #33ccff, 0 0 70px #33ccff; }
+}
+
+
+#chart {
+    width: 150%;
+    height: 500px;
+    margin: 40px;
+    padding: 40px;
+}
+
+
+/* Add a 3D pop-out hover effect for treemap boxes */
+rect {
+    transform-origin: center; /* Ensure the transformation starts from the center */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: filter 0.3s ease, transform 0.3s ease;
+
+}
+
+
+rect:hover {
+    transform: perspective(20px) translateZ(20px); /* Pop out straight towards the viewer */
+    box-shadow: 3px 3px 3px rgb(15, 15, 15); /* Add a shadow for depth */
+    stroke-width: 1px; /* Emphasize the border */
+    filter: drop-shadow(0px 5px 10px gold);
+    transform: scale(1.03); /* Slightly scale the box for emphasis */
+    padding-bottom: 20px;
+}
+
+
+
+#tooltip {
+    position: absolute;
+    background-color: rgba(28, 28, 28, 0.8);
+    color: rgb(255, 252, 188);
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+
+
+#outfitDisplay {
+    width: 90%;
+    height: 565px;
+    line-height: 30%;
+    margin: 30px;
+    padding: 30px;
+    border: 8px solid rgb(255, 249, 222);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #2a2a2a;
+
+}
+
+
+#outfitImages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    overflow-y: auto;
+    max-height: 500px; /* Optional: Limit height */
+}
+
+#outfitImages img {
+    width: 220px; /* Adjust size */
+    align-items: center;
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin: 5px;
+}
+
+#outfitImages img:hover {
+    transform: scale(1.1); /* Hover effect */
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Main Container for Tree Map and Bar Chart */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px; /* Space between Tree Map and Bar Chart */
+    margin-top: 20px;
+}
+
+/* Tree Map Container */
+#treeMapContainer {
+    flex: 3; /* Adjust width proportion if needed */
+}
+
+/* Vertical Stacked Bar Chart */
+.vertical-stacked-bar {
+    display: flex;
+    flex-direction: column-reverse; /* Stack segments from bottom to top */
+    width: 40px; /* Bar chart width */
+    height: 300px; /* Bar chart height */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; /* Optional: Rounded edges */
+    overflow: hidden;
+}
+
+.vertical-stacked-bar .color-segment {
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.vertical-stacked-bar .color-segment:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.vertical-legend {
+    margin-top: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+.vertical-legend span {
+    display: block;
+    margin-bottom: 5px;
+}
+/* Container for the Bar Chart and Vertical Text */
+.barGraphContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px; /* Space between vertical text and bar chart */
+    margin: 10px;
+}
+
+
+/* Vertical Text */
+#verticalText {
+    writing-mode: vertical-rl; /* Makes the text vertical */
+    text-orientation: mixed; /* Ensure letters are oriented correctly */
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffecc2; /* Dark gray for contrast */
+    margin-right: 10px; /* Space from bar graph */
+    text-align: center; /* Center the text in its container */
+    transform: rotate(180deg); /* Flip text to read from top to bottom */
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+/* Styling for the overall container */
+.chart-container {
+    position: fixed;
+    right: 0;
+    top: 20px; /* Adjust this value based on the height of your chart */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 20px;
+}
+
+/* Styling for the chart */
+.chart {
+    width: 300px;
+    height: 460px; /* Adjust this to the size of your chart */
+    margin-bottom: 10px; /* Space between chart and footer */
+}
+
+
+#container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#chart-container {
+    width: 60%;  /* Adjust width of the tree map */
+    height: 600px;  /* Adjust height of the tree map */
+}
+
+#photo-container {
+    width: 35%;  /* Adjust width of the photo container */
+    padding-left: 20px;  /* Space between tree map and photo */
+}
+
+#photo {
+    width: 100%;  /* Make the image take up full width of its container */
+    height: auto;  /* Keep the aspect ratio intact */
+}
+
+
+.music-player {
+    position: fixed;
+    right: -300px; /* Hidden by default */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 400px;
+    background-color: #333;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px 0 0 10px;
+    transition: right 0.3s ease;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.music-player.open {
+    right: 0; /* Slide out */
+}
+
+.toggle-btn {
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #444;
+    width: 30px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px 0 0 5px;
+    color: white;
+}
+
+.player-content {
+    padding: 20px;
+    text-align: center;
+}
+
+#playlist {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+#playlist li {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#audioPlayer {
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+
+
+/* Styling for the footer text with vertical rotation */
+.footer-text {
+    transform: rotate(-90deg);
+    transform-origin: top right;
+    text-align: center;
+    white-space: nowrap;
+    margin-top: 20px; /* Space between chart and footer */
+    font-size: xx-small;
+    margin: 10px;
+}
+
+.footer-text a {
+    color: #636363;
+    text-decoration: none;
+}
+
+.footer-text a:hover {
+    text-decoration: underline;
+}
+
+
+.hidden {
+    display: none;
+
+    
+}
