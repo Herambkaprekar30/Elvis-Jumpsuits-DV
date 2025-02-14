@@ -275,6 +275,16 @@ nodes.append("text")
     .attr("fill", "beige") // Set the text color
     .attr("text-anchor", "start"); // Align text to the left
 
+    nodes.append("text")
+    .attr("x", d => (d.x1 - d.x0) - 10) // Adjust X position
+    .attr("y", d => (d.y1 - d.y0) - 15) // Adjust Y position (slightly above the bottom)
+    .text(d => `Outfits: ${outfits[d.data.name] ? outfits[d.data.name].length : 0}`) 
+    .attr("font-size", "12px") 
+    .attr("font-weight", "200") 
+    .attr("fill", "white") 
+    .attr("text-anchor", "end") 
+    .style("font-family", "'Montserrat', sans-serif");
+
 // Function to show outfits
 function showOutfits(year) {
     yearTitle.textContent = `Outfits from ${year}`;
